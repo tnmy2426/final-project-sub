@@ -1,0 +1,21 @@
+from django import forms
+from .models import Event, EventPhoto, EventNotice
+
+
+class EventForm(forms.ModelForm):
+    event_title = forms.CharField(required=True, label="Event Name")
+    description = forms.CharField(required=True, label="Event Description", widget=forms.Textarea )
+    venue = forms.CharField(required=True, label="Event Venue")
+    start_datetime = forms.DateTimeField(widget=forms.widgets.DateInput(attrs={'type':'datetime-local'}))
+    end_datetime = forms.DateTimeField(widget=forms.widgets.DateInput(attrs={'type':'datetime-local'}))
+    registration_deadline = forms.DateTimeField(widget=forms.widgets.DateTimeInput(attrs={'type':'datetime-local'}))
+    event_banner = forms.ImageField(label="Event Banner Photo")
+    event_link = forms.URLField(label="Event Link", required=False)
+    event_fb_link = forms.URLField(label="Event's Facebook Link", required=False)
+    class Meta:
+        model = Event
+        fields = (
+        "event_title", "description", "venue", "start_datetime", "end_datetime", "fee_required",
+        "registration_fee", "registration_deadline", "registration_status", "event_banner", "event_link",
+        "event_fb_link",
+    )

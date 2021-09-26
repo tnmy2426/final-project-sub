@@ -1,0 +1,172 @@
+{% load static %}
+<!--sidebar wrapper -->
+<div class="sidebar-wrapper" data-simplebar="true">
+   <div class="sidebar-header">
+      <div>
+         <a href="{% url 'App_Event:event_list' %}"
+            ><img src="{% static 'img/logo.png' %}" class="logo-icon" alt="logo icon"
+         /></a>
+      </div>
+      <div>
+         <h4 class="logo-text">SUB CSE</h4>
+      </div>
+      <div class="toggle-icon ms-auto"><i class="bx bx-arrow-to-left"></i></div>
+   </div>
+   <!--navigation-->
+   <ul class="metismenu" id="menu">
+      {% if user.is_authenticated %}
+      <li>
+         <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="bx bx-home-circle"></i></div>
+            <div class="menu-title">Dashboard</div>
+         </a>
+         <ul>
+            <li>
+               <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Event List</a>
+            </li>
+            <li>
+               <a href="dashboard-eCommerce.html"><i class="bx bx-right-arrow-alt"></i>Volunteer List</a>
+            </li>
+            <li>
+               <a href="dashboard-analytics.html"><i class="bx bx-right-arrow-alt"></i>Participant List</a>
+            </li>
+         </ul>
+      </li>
+      <li>
+         <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="bx bx-calendar"></i></div>
+            <div class="menu-title">Events</div>
+         </a>
+         <ul>
+            <li>
+               <a href="{% url 'App_Event:create_event' %}"><i class="bx bx-right-arrow-alt"></i>Add New Event</a>
+            </li>
+         </ul>
+      </li>
+      <li>
+         <a href="#">
+            <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
+            <div class="menu-title">User Profile</div>
+         </a>
+      </li>
+      {% else %}
+      <li>
+         <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class="bx bx-calendar"></i></div>
+            <div class="menu-title">Events</div>
+         </a>
+      </li>
+      {% endif %}
+   </ul>
+   <!--end navigation-->
+</div>
+<!--end sidebar wrapper -->
+<!--start header -->
+<header>
+   <div class="topbar d-flex align-items-center">
+      <nav class="navbar navbar-expand">
+         <div class="mobile-toggle-menu"><i class="bx bx-menu"></i></div>
+         <div class="search-bar flex-grow-1">
+            <div class="position-relative search-bar-box">
+               <input type="text" class="form-control search-control" placeholder="Type to search..." />
+               <span class="position-absolute top-50 search-show translate-middle-y"><i class="bx bx-search"></i></span>
+               <span class="position-absolute top-50 search-close translate-middle-y"><i class="bx bx-x"></i></span>
+            </div>
+         </div>
+
+         {% if user.is_authenticated %}
+         <div class="top-menu ms-auto">
+            <ul class="navbar-nav align-items-center">
+               <li class="nav-item mobile-search-icon">
+                  <a class="nav-link" href="#"> <i class="bx bx-search"></i> </a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link position-relative" href="#"></a>
+                  <div class="dropdown-menu dropdown-menu-end">
+                     <a href="javascript:;"> </a>
+                     <div class="header-notifications-list">
+                        <a class="dropdown-item" href="javascript:;"> </a>
+                     </div>
+                  </div>
+               </li>
+               <li class="nav-item dropdown dropdown-large">
+                  <div class="dropdown-menu dropdown-menu-end">
+                     <div class="header-message-list">
+                        <a class="dropdown-item" href="javascript:;"> </a>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <div class="user-box dropdown">
+            <a
+               class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret"
+               href="#"
+               role="button"
+               data-bs-toggle="dropdown"
+               aria-expanded="false"
+            >
+               <img src="/media/ProfilePics/default.jpg" class="user-img" alt="user avatar" />
+               <div class="user-info ps-3">
+                  <p class="user-name mb-0">{{user.first_name}} {{user.last_name}}</p>
+
+                  <p class="designattion mb-0">Club | Admin</p>
+               </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+               <li>
+                  <a class="dropdown-item" href="#"><i class="bx bx-user"></i><span>Profile</span></a>
+               </li>
+               <li>
+                  <a class="dropdown-item" href="javascript:;"><i class="bx bx-home-circle"></i><span>Dashboard</span></a>
+               </li>
+               <li>
+                  <a class="dropdown-item" href="{% url 'App_Event:create_event' %}"
+                     ><i class="bx bx-plus"></i><span>Add Event</span></a
+                  >
+               </li>
+               <li>
+                  <div class="dropdown-divider mb-0"></div>
+               </li>
+               <li>
+                  <a class="dropdown-item" href="{% url 'App_ClubAdmin:logout_view' %}"
+                     ><i class="bx bx-log-out-circle"></i><span>Logout</span></a
+                  >
+               </li>
+            </ul>
+         </div>
+         <!--club_admin_profile condition end-->
+         {% else %}
+         <div class="top-menu ms-auto">
+            <ul class="navbar-nav align-items-center">
+               <li class="nav-item mobile-search-icon">
+                  <a class="nav-link" href="#"> <i class="bx bx-search"></i> </a>
+               </li>
+               <li class="nav-item">
+                  <a class="position-relative btn btn-dark radius-30 px-5" href="{% url 'App_ClubAdmin:login_view' %}"> Login </a>
+                  <div class="dropdown-menu dropdown-menu-end">
+                     <div class="header-notifications-list">
+                        <a class="dropdown-item" href="javascript:;"> </a>
+                     </div>
+                  </div>
+               </li>
+               <li class="nav-item dropdown dropdown-large">
+                  <div class="dropdown-menu dropdown-menu-end">
+                     <div class="header-message-list">
+                        <a class="dropdown-item" href="javascript:;"> </a>
+                     </div>
+                  </div>
+               </li>
+            </ul>
+         </div>
+         <div class="user-box ps-3">
+            <a class="btn btn-outline-dark radius-30 px-5" href="{% url 'App_ClubAdmin:clubadmin_signup' %}">
+               <div class="user-info ps-3">Register</div>
+            </a>
+         </div>
+         {% endif %}
+         <!--Authentication condition ends-->
+      </nav>
+   </div>
+</header>
+<!--end header -->

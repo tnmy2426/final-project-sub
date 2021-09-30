@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from App_ClubAdmin.models import ClubAdmin
+from App_Volunteer.models import Volunteer
 
 
 # Create your models here.
@@ -35,6 +36,6 @@ class EventPhoto(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events_photo")
     event_photo = models.ImageField(upload_to="EventsPhoto/%Y/%m/%d/", blank =True)
 
-# class EventVolunteer(models.Model):
-#     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events_volunteer")
-#     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name="event_volunteers")
+class EventVolunteer(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events_volunteer")
+    volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name="event_volunteers")

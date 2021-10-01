@@ -1,0 +1,82 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} {{event.event_title}} {% endblock title_block %}
+<!--Page content Here-->
+{% block body_block %}
+<div class="card">
+   <div class="row g-0">
+      <div class="col-md-4 border-end">
+         <img src="/media/{{event.event_banner}}" class="img-fluid" alt="{{event.event_title}}" />
+      </div>
+      <div class="col-md-8">
+         <div class="card-body">
+            <h4 class="card-title">{{event.event_title}}</h4>
+
+            <div class="mb-3"></div>
+            <hr />
+            <p class="card-text fs-6">{{event.description}}</p>
+            <dl class="row">
+               <dt class="col-sm-3">Event Venue:</dt>
+               <dd class="col-sm-9">{{event.venue}}</dd>
+
+               <dt class="col-sm-3">Start Date:</dt>
+               <dd class="col-sm-9">{{event.start_datetime}}</dd>
+
+               <dt class="col-sm-3">End Date:</dt>
+               <dd class="col-sm-9">{{event.start_datetime}}</dd>
+
+               <dt class="col-sm-3">Registration Deadline:</dt>
+               <dd class="col-sm-9">{{event.registration_deadline}}</dd>
+            </dl>
+            <hr />
+            <div class="row row-cols-auto row-cols-1 row-cols-md-3 align-items-center">
+               <div class="col">
+                  <label class="form-label">Event Link</label>
+                  <div class="input-group input-spinner">
+                     <a href="{{event.event_link}}">{{event.event_title}}'s Link</a>
+                  </div>
+               </div>
+               <div class="col">
+                  <label class="form-label">Facebook Link</label>
+                  <div class="input-group input-spinner">
+                     <a href="{{event.event_fb_link}}">{{event.event_title}}'s Facebook Link</a>
+                  </div>
+               </div>
+            </div>
+            <hr />
+            <div class="d-flex gap-3 mt-3">
+               <a href="#" class="btn btn-outline-success px-5"><span class="text">Register</span></a>
+            </div>
+         </div>
+      </div>
+   </div>
+   <hr />
+   <div class="card-body">
+      <ul class="nav nav-tabs nav-primary mb-0" role="tablist">
+         <li class="nav-item" role="presentation">
+            <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+               <div class="d-flex align-items-center">
+                  <div class="tab-icon"><i class="bx bx-comment-detail font-18 me-1"></i></div>
+                  <div class="tab-title">Event Notice</div>
+               </div>
+            </a>
+         </li>
+      </ul>
+      <div class="tab-content pt-3">
+         <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+            <p>
+               Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master
+               cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
+               dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
+               iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi.
+            </p>
+            <p>
+               Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master
+               cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh
+               dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum
+               iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi.
+            </p>
+         </div>
+      </div>
+   </div>
+</div>
+
+{% endblock body_block %}

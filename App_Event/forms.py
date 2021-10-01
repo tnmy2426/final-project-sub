@@ -1,6 +1,6 @@
 from django import forms
 from .models import Event, EventPhoto, EventNotice
-
+from App_Participant.models import Participant
 
 class EventForm(forms.ModelForm):
     event_title = forms.CharField(required=True, label="Event Name")
@@ -19,3 +19,11 @@ class EventForm(forms.ModelForm):
         "registration_fee", "registration_deadline", "registration_status", "event_banner", "event_link",
         "event_fb_link",
     )
+
+
+class EventRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Participant
+        fields = (
+            "event_reg_id", "participant_name", "participant_email", "phone_no", "guests", "fee_amount", "transaction_id"
+        )

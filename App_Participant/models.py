@@ -4,7 +4,7 @@ from App_Event.models import Event
 # Create your models here.
 
 class Participant(models.Model):
-    event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name="event_participant")
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event_participant")
     event_reg_id = models.CharField(max_length=20, blank=False)
     participant_name = models.CharField(max_length=20, blank=False)
     participant_email = models.EmailField(max_length=254, blank=False)

@@ -43,7 +43,9 @@
             </div>
             <hr />
             <div class="d-flex gap-3 mt-3">
-               <a href="#" class="btn btn-outline-success px-5"><span class="text">Register</span></a>
+               <a href="{% url 'App_Event:event_registration_view' pk=event.pk %}" class="btn btn-outline-success px-5"
+                  ><span class="text">Register</span></a
+               >
             </div>
          </div>
       </div>

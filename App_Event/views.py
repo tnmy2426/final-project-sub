@@ -1,6 +1,4 @@
 
-from django.contrib.messages.api import error
-from django.http.response import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Event, EventNotice, EventPhoto
 from .forms import EventForm, EventRegistrationForm
@@ -11,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 #For messages
 from django.contrib import messages
+
 # Create your views here.
 
 def EventList(request):
@@ -37,7 +36,7 @@ def EventRegistration(request, pk):
                     fee_amount=participant.fee_amount, payment_status=participant.payment_status, transaction_id=participant.transaction_id
                 )
                 messages.success(request, f"Registration Successful in {event.event_title}. ")
-                return render(request, "App_Event/event_registration.html", {"form":form})
+                return redirect("App_Event:event_details", pk=event.id)
             else:
                 form = EventRegistrationForm()
                 error_message = f"{event_reg_id} ID already taken!!!"
@@ -57,4 +56,3 @@ def CreateEvent(request):
             messages.success(request, "Event Created Successfully!!")
             return redirect ("App_Event:event_list")
     return render(request, "App_Event/create_event.html", {"form":form} )
-

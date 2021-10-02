@@ -14,6 +14,8 @@ class Participant(models.Model):
     payment_status = models.BooleanField(blank=True, null=True)
     transaction_id = models.CharField(max_length=20, blank=True, null=True)
 
+    def __str__(self):
+        return f"{self.participant_name} | Reg_id: {self.event_reg_id} | Event: {self.event}"
 class ParticipantStatus(models.Model):
     event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name="event_participantstatus")
     participant = models.OneToOneField(Participant, on_delete=models.CASCADE, related_name="participant_status")

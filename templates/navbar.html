@@ -25,9 +25,6 @@
                <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Event List</a>
             </li>
             <li>
-               <a href="dashboard-eCommerce.html"><i class="bx bx-right-arrow-alt"></i>Volunteer List</a>
-            </li>
-            <li>
                <a href="dashboard-analytics.html"><i class="bx bx-right-arrow-alt"></i>Participant List</a>
             </li>
          </ul>
@@ -44,7 +41,7 @@
          </ul>
       </li>
       <li>
-         <a href="#">
+         <a href="{% url 'App_ClubAdmin:club_admin_profile' %}">
             <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
             <div class="menu-title">User Profile</div>
          </a>
@@ -99,15 +96,25 @@
                data-bs-toggle="dropdown"
                aria-expanded="false"
             >
+               {% if user.club_admin_user.profile_pic %}
+               <img src="/media/{{user.club_admin_user.profile_pic}}" class="user-img" alt="{{user.full_name}}'s Photo" />
+               {% else %}
                <img src="/media/default.jpg" class="user-img" alt="user avatar" />
+               {% endif %}
                <div class="user-info ps-3">
                   <p class="user-name mb-0">{{user.full_name}}</p>
+                  {% if user.club_admin_user.designation %}
+                  <p class="designattion mb-0">Club | {{user.club_admin_user.designation}}</p>
+                  {% else %}
                   <p class="designattion mb-0">Club | Admin</p>
+                  {% endif %}
                </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
                <li>
-                  <a class="dropdown-item" href="#"><i class="bx bx-user"></i><span>Profile</span></a>
+                  <a class="dropdown-item" href="{% url 'App_ClubAdmin:club_admin_profile' %}"
+                     ><i class="bx bx-user"></i><span>Profile</span></a
+                  >
                </li>
                <li>
                   <a class="dropdown-item" href="javascript:;"><i class="bx bx-home-circle"></i><span>Dashboard</span></a>

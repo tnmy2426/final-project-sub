@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse
 from .models import User, ClubAdmin
-from .forms import CreateNewUser, LoginUser
+from .forms import CreateNewUser, LoginUser, ClubAdminProfileForm, ProfilePicUpload
+
 
 # For Messages
 from django.contrib import messages
@@ -47,3 +48,27 @@ def LogoutView(request):
     logout(request)
     messages.success(request, "You have been logged out successfully!")
     return HttpResponseRedirect(reverse('App_Event:event_list'))
+
+@login_required
+def ClubAdminProfile(request):
+    profile = ClubAdmin.objects.get(user=request.user)
+    form = ClubAdminProfileForm(instance=profile)
+    if request.method=="POST":
+        form = ClubAdminProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Profile information updated!!!")
+            form = ClubAdminProfileForm(instance=profile)
+    return render(request, 'App_ClubAdmin/club_admin_profile.html', {"form":form})
+
+@login_required
+def AddProfilePic(request):
+    profile = ClubAdmin.objects.get(user=request.user)
+    form = ProfilePicUpload(instance=profile)
+    if request.method == 'POST':
+        form = ProfilePicUpload(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile Picture Added Successfully!!")
+            return HttpResponseRedirect(reverse('App_ClubAdmin:club_admin_profile'))
+    return render(request, 'App_ClubAdmin/pro_pic_add.html', context={'form':form})

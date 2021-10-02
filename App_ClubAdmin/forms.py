@@ -1,5 +1,7 @@
 from django import forms
-from .models import User
+from django.db import models
+from django.db.models import fields
+from .models import User, ClubAdmin
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
@@ -26,3 +28,13 @@ class LoginUser(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+class ClubAdminProfileForm(forms.ModelForm):
+    class Meta:
+        model = ClubAdmin
+        fields = ("designation", "gender", "phone_no", "address", "fb_id_link")
+
+class ProfilePicUpload(forms.ModelForm):
+    class Meta:
+        model = ClubAdmin
+        fields = ("profile_pic",)

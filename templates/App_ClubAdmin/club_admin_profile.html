@@ -1,0 +1,177 @@
+{% extends 'base.html' %} {% load static %} {% load crispy_forms_tags %}
+<!--Title Here-->
+{% block title_block %} {{user.full_name}}'s' Profile {% endblock title_block %}
+<!--Page content Here-->
+{% block body_block %}
+<!--start header -->
+<!--breadcrumb-->
+<div class="page-content">
+   <div class="page-breadcrumb d-none d-sm-flex align-items-center my-3">
+      <div class="breadcrumb-title pe-3">User Profile</div>
+      <div class="ps-3">
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+               <li class="breadcrumb-item">
+                  <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+               </li>
+               <li class="breadcrumb-item active" aria-current="page">{{user.full_name}}'s Profile</li>
+            </ol>
+         </nav>
+      </div>
+   </div>
+   <!--end breadcrumb-->
+   {% if user.club_admin_user %}
+   <div class="container">
+      <div class="main-body">
+         <div class="row">
+            <div class="col-lg-4">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="d-flex flex-column align-items-center text-center">
+                        <!--Profile Pics Condition-->
+                        {% if user.club_admin_user.profile_pic %}
+                        <img
+                           src="/media/{{user.club_admin_user.profile_pic}}"
+                           alt="Admin"
+                           class="rounded-circle p-1 bg-info"
+                           width="110"
+                        />
+                        {% else %}
+                        <img src="/media/default.jpg" alt="Admin" class="rounded-circle p-1 bg-info" width="110" />
+                        {% endif %}
+                        <div class="mt-3">
+                           <h4>{{user.full_name}}</h4>
+                           <p class="text-secondary mb-1">Club | {{user.club_admin_user.designation}}</p>
+                           <p class="text-muted font-size-sm">{{user.club_admin_user.phone_no}}</p>
+                           <p class="text-muted font-size-sm">{{user.club_admin_user.address}}</p>
+                           <a href="{% url 'App_ClubAdmin:add_profile_pic' %}" class="btn btn-outline-info">Change Profile Pic</a>
+                        </div>
+                     </div>
+                     <hr class="my-4" />
+                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                           <h6 class="mb-0">
+                              <svg
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="24"
+                                 height="24"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="2"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 class="feather feather-facebook me-2 icon-inline text-primary"
+                              >
+                                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg
+                              >Facebook
+                           </h6>
+                           <a href="{{user.club_admin_user.fb_id_link}}" class="text-secondary">Visit Facebook Profile</a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-8">
+               <div class="card">
+                  <div class="card-body">
+                     <form method="POST" class="p-2">
+                        {% csrf_token %} {{ form|crispy }}
+                        <hr />
+                        <button type="submit" class="btn btn-outline-success px-5">Save Changes</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% elif user.volunteer_profile %}
+   <div class="container">
+      <div class="main-body">
+         <div class="row">
+            <div class="col-lg-4">
+               <div class="card">
+                  <div class="card-body">
+                     <div class="d-flex flex-column align-items-center text-center">
+                        <!--Profile Pics Condition-->
+                        <img src="/media/ProfilePics/default.jpg" alt="Admin" class="rounded-circle p-1 bg-info" width="110" />
+                        <div class="mt-3">
+                           <h4>{{user.first_name}} {{user.last_name}}</h4>
+                           <p class="text-secondary mb-1">Volunteer</p>
+                           <p class="text-muted font-size-sm">{{user.volunteer_profile.phone_no}}</p>
+                           <p class="text-muted font-size-sm">{{user.volunteer_profile.address}}</p>
+                        </div>
+                     </div>
+                     <hr class="my-4" />
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-8">
+               <div class="card">
+                  <div class="card-body">
+                     <form method="POST">
+                        <div class="row mb-3">
+                           <div class="col-sm-3">
+                              <h6 class="mb-0 mt-2">First Name</h6>
+                           </div>
+                           <div class="col-sm-9 text-secondary">
+                              <input name="first_name" type="text" class="form-control" value="{{user.first_name}}" />
+                           </div>
+                        </div>
+                        <div class="row mb-3">
+                           <div class="col-sm-3">
+                              <h6 class="mb-0 mt-2">Last Name</h6>
+                           </div>
+                           <div class="col-sm-9 text-secondary">
+                              <input name="last_name" type="text" class="form-control" value="{{user.last_name}}" />
+                           </div>
+                        </div>
+                        <div class="row mb-3">
+                           <div class="col-sm-3">
+                              <h6 class="mb-0 mt-2">Email</h6>
+                           </div>
+                           <div class="col-sm-9 text-secondary">
+                              <input name="email" type="text" class="form-control" value="{{user.email}}" />
+                           </div>
+                        </div>
+                        <div class="row mb-3">
+                           <div class="col-sm-3">
+                              <h6 class="mb-0 mt-2">Mobile | Phone</h6>
+                           </div>
+                           <div class="col-sm-9 text-secondary">
+                              <input
+                                 name="phone_no"
+                                 type="text"
+                                 class="form-control"
+                                 value="{{user.volunteer_profile.phone_no}}"
+                              />
+                           </div>
+                        </div>
+                        <div class="row mb-3">
+                           <div class="col-sm-3">
+                              <h6 class="mb-0 mt-2">Address</h6>
+                           </div>
+                           <div class="col-sm-9 text-secondary">
+                              <input name="address" type="text" class="form-control" value="{{user.volunteer_profile.address}}" />
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-sm-3"></div>
+                           <div class="col-sm-9 text-secondary">
+                              <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endif %}
+</div>
+
+<!--end header -->
+{% endblock body_block %}

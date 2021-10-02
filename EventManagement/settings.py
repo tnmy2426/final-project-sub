@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'App_Volunteer',
     'App_Event',
     'App_Participant',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

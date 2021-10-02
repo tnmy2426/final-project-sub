@@ -8,5 +8,6 @@ urlpatterns = [
     path('signup/', views.ClubAdminSignup, name='clubadmin_signup'),
     path('login/', views.LoginView, name='login_view'),
     path('logout/', views.LogoutView, name='logout_view'),
-    # path('club-admin-profile/', views.ClubAdminProfile, name='club_admin_profile'),
+    path('club-admin-profile/', views.ClubAdminProfile, name='club_admin_profile'),
+    path('club-admin-add-profile-pic/', views.AddProfilePic, name='add_profile_pic'),
 ]

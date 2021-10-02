@@ -60,24 +60,15 @@ class ClubAdmin(models.Model):
         ("NONE", "None")
     ]
 
-    Designation_Choices = [
-        ("PRESIDENT", "President"),
-        ("VICE_PRSIDENT", "Vice President"),
-        ("GENERAL_SECRETARY", "General Secretary",),
-        ("TREASURER", "Treasurer"),
-        ("JOIN_SECRETARY", " Join Secretary"),
-        ("PC_SECRETARY", "Public & Comunication Secretary"),
-        ("NONE", "None")
-    ]
-
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="club_admin_user")
-    designation = models.CharField(max_length=30, choices=Designation_Choices, default="NONE")
+    designation = models.CharField(max_length=30, blank=True)
     profile_pic = models.ImageField(upload_to="ProfilePics/ClubAdmins", blank=True)
     gender = models.CharField(max_length=50, choices=Gender_Choices, default="NONE")
     phone_no = models.CharField(max_length=15, blank=True)
     address = models.CharField(max_length=200, blank=True)
     fb_id_link = models.URLField(max_length=100, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
+
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):

@@ -30,7 +30,7 @@ def EventRegistration(request, pk):
             participant = form.save(commit=False)
             participant.event_id = event.id
             event_reg_id = participant.event_reg_id
-            if not Participant.objects.filter(event_reg_id=event_reg_id).exists():
+            if not Participant.objects.filter(event_reg_id=event_reg_id, event=event).exists():
                 Participant.objects.create(
                     event_reg_id=event_reg_id, event=event, participant_name= participant.participant_name, 
                     participant_email=participant.participant_email, phone_no=participant.phone_no, guests=participant.guests,

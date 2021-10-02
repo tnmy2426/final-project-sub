@@ -8,8 +8,8 @@ from App_Volunteer.models import Volunteer
 
 class Event(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='clubadmin_event_created')
-    event_title = models.CharField(max_length=60, verbose_name="Event Title")
-    description = models.TextField(max_length=1000)
+    event_title = models.CharField(max_length=150, verbose_name="Event Title")
+    description = models.TextField(max_length=1000, verbose_name="Event Description")
     venue = models.CharField(max_length=60)
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
@@ -18,8 +18,8 @@ class Event(models.Model):
     registration_deadline = models.DateTimeField(blank=True, null=True)
     registration_status = models.BooleanField(default=False)
     event_banner = models.ImageField(upload_to="Event/%Y/%m/%d/")
-    event_link = models.URLField(max_length=100, blank=True, null=True)
-    event_fb_link = models.URLField(max_length=100, blank=True, null=True)
+    event_link = models.URLField(max_length=255, blank=True, null=True)
+    event_fb_link = models.URLField(max_length=255, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

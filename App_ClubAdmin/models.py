@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         ugettext_lazy('staff status'), 
         default=False,
-        help_text= ugettext_lazy('Designates whether the user can log in this site as Volunteer')
+        help_text= ugettext_lazy('Designates whether the user can log in this site as Volunteer.')
     )
 
     USERNAME_FIELD = 'username'
@@ -72,18 +72,12 @@ class ClubAdmin(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="club_admin_user")
     designation = models.CharField(max_length=30, choices=Designation_Choices, default="NONE")
-    profile_pic = models.ImageField(upload_to="ProfilePics/ClubAdmins")
+    profile_pic = models.ImageField(upload_to="ProfilePics/ClubAdmins", blank=True)
     gender = models.CharField(max_length=50, choices=Gender_Choices, default="NONE")
     phone_no = models.CharField(max_length=15, blank=True)
     address = models.CharField(max_length=200, blank=True)
     fb_id_link = models.URLField(max_length=100, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-date_joined',]
-
-    def __str__(self):
-        return self.user.username
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):

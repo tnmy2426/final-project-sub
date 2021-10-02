@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from App_ClubAdmin.models import User
 
 # Create your models here.
 

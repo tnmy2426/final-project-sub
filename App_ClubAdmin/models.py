@@ -35,6 +35,8 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, null=False, max_length=20)
     full_name = models.CharField(max_length=30, blank=True)
+    is_clubAdmin = models.BooleanField(default=False)
+    is_volunteer = models.BooleanField(default=False)
     is_active = models.BooleanField(
         ugettext_lazy('active'),
         default=True,

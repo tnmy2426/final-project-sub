@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = 'App_ClubAdmin.User'
+LOGIN_URL = "accounts/login/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

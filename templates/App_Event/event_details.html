@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} {{event.event_title}} {% endblock title_block %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load group_check %}
+<!--title-->
+{% block title_block %} {{event.event_title}} {% endblock title_block %}
 <!--Page content Here-->
 {% block body_block %}
 <div class="card">
@@ -97,7 +99,7 @@
          <!--End Event Notice Section-->
          <!--Event Photos Section-->
          <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
-            {% if user.is_authenticated %}
+            {% if request.user.is_authenticated and request.user|has_group:"ClubAdmin" %}
             <div class="d-lg-flex align-items-center mb-4 gap-3">
                <div class="position-relative"></div>
                <div class="ms-auto">
@@ -160,6 +162,7 @@
          </div>
          <!--End of Event Photos Section-->
          <!--Event Volunteer Section-->
+         {% if request.user.is_authenticated and request.user|has_group:"ClubAdmin" %}
          <div class="tab-pane fade" id="primarycontact" role="tabpanel">
             <div class="card">
                <div class="card-body">
@@ -213,6 +216,7 @@
                </div>
             </div>
          </div>
+         {% endif %}
       </div>
    </div>
 </div>

@@ -1,5 +1,6 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
+
 from .models import Event, EventNotice, EventPhoto
 from .forms import EventForm, EventRegistrationForm
 from App_Participant.models import Participant

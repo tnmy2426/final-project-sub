@@ -20,7 +20,7 @@
       </div>
    </div>
    <!--end breadcrumb-->
-   {% if user.club_admin_user %}
+   {% if user.is_authenticated and user.is_clubAdmin %}
    <div class="container">
       <div class="main-body">
          <div class="row">
@@ -86,92 +86,7 @@
          </div>
       </div>
    </div>
-   {% elif user.volunteer_profile %}
-   <div class="container">
-      <div class="main-body">
-         <div class="row">
-            <div class="col-lg-4">
-               <div class="card">
-                  <div class="card-body">
-                     <div class="d-flex flex-column align-items-center text-center">
-                        <!--Profile Pics Condition-->
-                        <img src="/media/ProfilePics/default.jpg" alt="Admin" class="rounded-circle p-1 bg-info" width="110" />
-                        <div class="mt-3">
-                           <h4>{{user.first_name}} {{user.last_name}}</h4>
-                           <p class="text-secondary mb-1">Volunteer</p>
-                           <p class="text-muted font-size-sm">{{user.volunteer_profile.phone_no}}</p>
-                           <p class="text-muted font-size-sm">{{user.volunteer_profile.address}}</p>
-                        </div>
-                     </div>
-                     <hr class="my-4" />
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-8">
-               <div class="card">
-                  <div class="card-body">
-                     <form method="POST">
-                        <div class="row mb-3">
-                           <div class="col-sm-3">
-                              <h6 class="mb-0 mt-2">First Name</h6>
-                           </div>
-                           <div class="col-sm-9 text-secondary">
-                              <input name="first_name" type="text" class="form-control" value="{{user.first_name}}" />
-                           </div>
-                        </div>
-                        <div class="row mb-3">
-                           <div class="col-sm-3">
-                              <h6 class="mb-0 mt-2">Last Name</h6>
-                           </div>
-                           <div class="col-sm-9 text-secondary">
-                              <input name="last_name" type="text" class="form-control" value="{{user.last_name}}" />
-                           </div>
-                        </div>
-                        <div class="row mb-3">
-                           <div class="col-sm-3">
-                              <h6 class="mb-0 mt-2">Email</h6>
-                           </div>
-                           <div class="col-sm-9 text-secondary">
-                              <input name="email" type="text" class="form-control" value="{{user.email}}" />
-                           </div>
-                        </div>
-                        <div class="row mb-3">
-                           <div class="col-sm-3">
-                              <h6 class="mb-0 mt-2">Mobile | Phone</h6>
-                           </div>
-                           <div class="col-sm-9 text-secondary">
-                              <input
-                                 name="phone_no"
-                                 type="text"
-                                 class="form-control"
-                                 value="{{user.volunteer_profile.phone_no}}"
-                              />
-                           </div>
-                        </div>
-                        <div class="row mb-3">
-                           <div class="col-sm-3">
-                              <h6 class="mb-0 mt-2">Address</h6>
-                           </div>
-                           <div class="col-sm-9 text-secondary">
-                              <input name="address" type="text" class="form-control" value="{{user.volunteer_profile.address}}" />
-                           </div>
-                        </div>
-
-                        <div class="row">
-                           <div class="col-sm-3"></div>
-                           <div class="col-sm-9 text-secondary">
-                              <input type="submit" class="btn btn-primary px-4" value="Save Changes" />
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
    {% endif %}
 </div>
-
 <!--end header -->
 {% endblock body_block %}

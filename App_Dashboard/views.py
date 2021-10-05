@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 # Models
 from App_ClubAdmin.models import ClubAdmin
@@ -17,6 +17,11 @@ User = get_user_model()
 @login_required
 @group_required("ClubAdmin")
 def ActiveEventList(request):
-    events = Event.objects.filter(is_active=True)
+    events = Event.objects.all()
     print(events)
     return render(request, "App_Dashboard/active_event_list.html", {"events":events})
+
+@login_required
+def ActiveEventDetails(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, "App_Dashboard/active_event_details.html", {"event":event})

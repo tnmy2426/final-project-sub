@@ -23,7 +23,7 @@ def ClubAdminSignup(request):
             user.is_active = False
             user.is_clubAdmin = True
             user.save()
-            group = Group.objects.get_or_create(name='ClubAdmin')
+            group = Group.objects.get(name='ClubAdmin')
             print(group)
             user.groups.add(group)
             messages.success(request, 'Registration Successfull. Your profile will be verified by an Admin!')

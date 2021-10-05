@@ -18,7 +18,7 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = (
         "event_title", "description", "venue", "start_datetime", "end_datetime", "fee_required",
-        "registration_fee", "registration_deadline", "registration_status", "event_banner", "event_link",
+        "registration_fee", "registration_deadline", "event_banner", "event_link",
         "event_fb_link",
     )
 

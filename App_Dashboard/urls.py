@@ -6,7 +6,7 @@ app_name = 'App_Dashboard'
 
 urlpatterns = [
     path('active-events/', views.ActiveEventList, name='active_event'),
-    # path('login/', views.LoginView, name='login_view'),
+    path('active-event/<pk>/', views.ActiveEventDetails, name='active_event_details'),
     # path('logout/', views.LogoutView, name='logout_view'),
     # path('club-admin-profile/', views.ClubAdminProfile, name='club_admin_profile'),
     # path('club-admin-add-profile-pic/', views.AddProfilePic, name='add_profile_pic'),

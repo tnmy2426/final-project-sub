@@ -20,10 +20,10 @@ class Event(models.Model):
     fee_required = models.BooleanField(default=False, blank=True)
     registration_fee = models.FloatField(default=0.00, blank=True)
     registration_deadline = models.DateTimeField(blank=True, null=True)
-    registration_status = models.BooleanField(default=False)
     event_banner = models.ImageField(upload_to="Event/%Y/%m/%d/")
     event_link = models.URLField(max_length=255, blank=True, null=True)
     event_fb_link = models.URLField(max_length=255, blank=True, null=True)
+    is_active = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

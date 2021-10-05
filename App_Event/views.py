@@ -16,7 +16,7 @@ from django.contrib import messages
 # Create your views here.
 
 def EventList(request):
-    events = Event.objects.all()
+    events = Event.objects.filter(is_active=True)
     return render(request, "App_Event/event_list.html", {"events":events})
 
 def EventDetails(request, pk):
@@ -64,10 +64,11 @@ def CreateEvent(request):
         if form.is_valid():
             event_obj = form.save(commit=False)
             event_obj.user = request.user
+            event_obj.is_active = True
             event_obj.save()
             messages.success(request, "Event Created Successfully!!")
             return redirect ("App_Event:event_list")
-    return render(request, "App_Event/create_event.html", {"form":form} )
+    return render(request, "App_Event/create_event.html", {"form":form})
 
 @login_required
 @group_required("ClubAdmin")

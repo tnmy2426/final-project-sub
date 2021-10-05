@@ -19,13 +19,13 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_active', 'is_superuser', 'is_clubAdmin', 'is_volunteer')
 
     fieldsets = (
-        (None, {'fields': ('username', 'full_name', 'password')}),
-        ('Permission', {'fields': ('is_superuser', 'is_staff', 'is_clubAdmin', )})
+        (None, {'fields': ('username', 'full_name', 'password','is_active','is_clubAdmin','is_volunteer')}),
+        ('Permission', {'fields': ('is_superuser', 'is_staff', )})
     )
 
     add_fieldsets = (
         (None, {'fields': ('username', 'full_name', 'is_active', 'password1', 'password2', 'is_clubAdmin', 'is_volunteer')}),
-        ('Permission', {'fields': ('is_superuser', 'is_staff', 'is_clubAdmin',)})
+        ('Permission', {'fields': ('is_superuser', 'is_staff',)})
     )
 
     ordering = ('username',)

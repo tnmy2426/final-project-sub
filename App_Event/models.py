@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.shortcuts import render
 from App_ClubAdmin.models import ClubAdmin
 from App_Volunteer.models import Volunteer
 
@@ -31,6 +32,13 @@ class Event(models.Model):
 class EventNotice(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events_notice")
     event_notice = models.TextField(max_length=255)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return self.event_notice
 
 class EventPhoto(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events_photo")

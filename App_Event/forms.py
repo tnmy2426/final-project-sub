@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth import models
+from django.db.models import fields
 from .models import Event, EventPhoto, EventNotice
 from App_Participant.models import Participant
 
@@ -27,3 +29,9 @@ class EventRegistrationForm(forms.ModelForm):
         fields = (
             "event_reg_id", "participant_name", "participant_email", "phone_no", "guests", "fee_amount", "transaction_id"
         )
+
+class EventNoticeForm(forms.ModelForm):
+    event_notice = forms.CharField(label="Event Notice", widget=forms.Textarea )
+    class Meta:
+        model = EventNotice
+        fields = ("event_notice",)

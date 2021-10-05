@@ -12,6 +12,7 @@ urlpatterns = [
     path('volunteer/', include('App_Volunteer.urls')),
     path('', include('App_Event.urls')),
     path('participant/', include('App_Participant.urls')),
+    path('dashboard/', include('App_Dashboard.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

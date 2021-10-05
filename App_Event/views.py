@@ -1,9 +1,10 @@
 
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Event, EventNotice, EventPhoto
-from .forms import EventForm, EventRegistrationForm, EventNoticeForm
+from .models import Event, EventNotice, EventPhoto, EventVolunteer
+from .forms import EventForm, EventRegistrationForm, EventNoticeForm, EventPhotoForm
 from App_Participant.models import Participant
+from App_Volunteer.models import Volunteer
 
 # Decorators
 from django.contrib.auth.decorators import login_required
@@ -21,7 +22,14 @@ def EventList(request):
 def EventDetails(request, pk):
     event = get_object_or_404(Event, pk=pk)
     event_notices = EventNotice.objects.filter(event=event)
-    return render(request, "App_Event/event_details.html", {"event":event, "event_notices": event_notices})
+    event_photos = EventPhoto.objects.filter(event=event)
+    event_volunteers = EventVolunteer.objects.filter(event=event)
+    for volunteer in event_volunteers:
+        print(volunteer)
+    context = {
+        "event":event, "event_notices": event_notices, "event_photos":event_photos, "event_volunteers":event_volunteers
+    }
+    return render(request, "App_Event/event_details.html", context)
 
 def EventRegistration(request, pk):
     event = get_object_or_404(Event, pk=pk)
@@ -87,4 +95,27 @@ def DeleteEventNotice(request, pk):
     return redirect("App_Event:event_list")
 
 
+@login_required
+@group_required("ClubAdmin")
+def AddEventPhoto(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    form = EventPhotoForm()
+    if request.method == "POST":
+        form = EventPhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = form.save(commit=False)
+            photo.event_id = event.id
+            photo.save()
+            messages.success(request, f"{event.event_title}'s Photo Uploaded!!")
+            return redirect("App_Event:event_details", pk=event.id)
+        else:
+            form = EventPhotoForm()
+    return render(request, "App_Event/event_photo.html", {"form": form})
 
+@login_required
+@group_required("ClubAdmin")
+def DeleteEventPhoto(request, pk):
+    photo = EventPhoto.objects.get(id=pk)
+    photo.delete()
+    messages.warning(request, "Photo Removed!!")
+    return redirect("App_Event:event_list")

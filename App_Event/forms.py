@@ -35,3 +35,8 @@ class EventNoticeForm(forms.ModelForm):
     class Meta:
         model = EventNotice
         fields = ("event_notice",)
+
+class EventPhotoForm(forms.ModelForm):
+    class Meta:
+        model = EventPhoto
+        fields = ("event_photo",)

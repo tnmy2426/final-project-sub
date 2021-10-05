@@ -1,10 +1,13 @@
 from django.db import models
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from App_ClubAdmin.models import ClubAdmin
 from App_Volunteer.models import Volunteer
 
+from django.contrib.auth import get_user_model
 
+
+User = get_user_model()
 # Create your models here.
 
 class Event(models.Model):
@@ -47,3 +50,6 @@ class EventPhoto(models.Model):
 class EventVolunteer(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="events_volunteer")
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE, related_name="event_volunteers")
+
+    def __str__(self):
+        return self.volunteer.user.username

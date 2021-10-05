@@ -18,7 +18,6 @@ from django.contrib import messages
 User = get_user_model()
 
 
-# @login_required
 def AddVolunteer(request, pk):
     event = get_object_or_404(Event, pk=pk)
     form = CreateVolunteer()
@@ -31,8 +30,7 @@ def AddVolunteer(request, pk):
             user.is_active = True
             user.is_volunteer = True
             user.save()
-            group = Group.objects.get_or_create(name='Volunteer')
-            print(group)
+            group = Group.objects.get(name='Volunteer')
             user.groups.add(group)
             volunteer_profile = Volunteer(user=user)
             volunteer_profile.save()
@@ -41,6 +39,17 @@ def AddVolunteer(request, pk):
             messages.success(request, 'Volunteer Added!!!')
             return redirect("App_Event:event_details", pk=event.id)
     return render(request, "App_Volunteer/add_volunteer.html", {"form":form})
+
+@login_required
+@group_required("ClubAdmin")
+def DeleteVolunteer(request, pk):
+    event_volunteer = EventVolunteer.objects.get(id=pk)
+    event_volunteer.delete()
+    event_volunteer.volunteer.delete()
+    event_volunteer.volunteer.user.delete()
+    messages.warning(request, f"{event_volunteer.volunteer.user.full_name} Volunteer removed!!")
+    return redirect("App_Event:event_list")
+
 
 @login_required
 @group_required("Volunteer")

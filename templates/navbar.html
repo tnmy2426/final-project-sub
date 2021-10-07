@@ -27,16 +27,11 @@
                <a href="{% url 'App_Dashboard:active_event' %}"><i class="bx bx-right-arrow-alt"></i>Active Events</a>
             </li>
             <li>
-               <a href="#"><i class="bx bx-right-arrow-alt"></i>Participant List</a>
+               <a href="{% url 'App_Event:create_event' %}"><i class="bx bx-plus"></i>Add New Event</a>
             </li>
          </ul>
       </li>
-      <li>
-         <a href="{% url 'App_Event:event_list' %}" class="has-arrow">
-            <div class="parent-icon"><i class="bx bx-calendar"></i></div>
-            <div class="menu-title">Events</div>
-         </a>
-      </li>
+
       <li>
          <a href="{% url 'App_ClubAdmin:club_admin_profile' %}">
             <div class="parent-icon"><i class="bx bx-user-circle"></i></div>

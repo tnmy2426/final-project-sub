@@ -11,7 +11,7 @@
                <li class="breadcrumb-item">
                   <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                </li>
-               <li class="breadcrumb-item active" aria-current="page">{{event.event_title}} Event Status</li>
+               <li class="breadcrumb-item active" aria-current="page">{{event_title}} Event Status</li>
             </ol>
          </nav>
       </div>
@@ -179,60 +179,89 @@
                   <tr>
                      <th>Reg id</th>
                      <th>Participant</th>
-                     <th>Payment</th>
+                     <th>Attendence</th>
                      <th>Kit</th>
                      <th>Breakfast</th>
                      <th>Lunch</th>
                      <th>Sancks</th>
+                     <th>Misc</th>
                   </tr>
                </thead>
                <tbody>
+                  {% for p in verified_participants %}
                   <tr>
-                     <td>#1</td>
+                     <td>{{p.participant.event_reg_id}}</td>
                      <td>
-                        <h6 class="mb-1 font-14">Participant Name</h6>
+                        <h6 class="mb-1 font-14">{{p.participant.participant_name}}</h6>
                      </td>
                      <td>
+                        {% if p.attendence == True %}
                         <div class="badge rounded-pill bg-light-success py-2">
-                           <a href="#" class="px-2 text-success">Received</a>
+                           <span class="px-2 text-success">Present</span>
                         </div>
-                        <div class="badge rounded-pill bg-light-danger py-2">
-                           <a href="#" class="px-2 text-danger">Not Received</a>
-                        </div>
-                     </td>
-                     <td>
+                        {% else %}
                         <div class="badge rounded-pill bg-light-success py-2">
-                           <a href="#" class="px-2 text-success">Received</a>
+                           <a href="{% url 'App_Dashboard:attendence_participant' pk=p.id %}" class="px-2 text-danger">Verify</a>
                         </div>
-                        <div class="badge rounded-pill bg-light-danger text-info py-2">
-                           <a href="#" class="px-2 text-danger">Not Received</a>
-                        </div>
+                        {% endif %}
                      </td>
                      <td>
-                        <div class="badge rounded-pill bg-light-success text-dark py-2">
-                           <a href="#" class="px-2 text-success">Received</a>
+                        {% if p.kit_token == True %}
+                        <div class="badge rounded-pill bg-light-success py-2">
+                           <span class="px-2 text-success">Received</span>
                         </div>
+                        {% else %}
                         <div class="badge rounded-pill bg-light-danger text-info py-2">
-                           <a href="#" class="px-2 text-danger">Not Received</a>
+                           <a href="{% url 'App_Dashboard:kit_token' pk=p.id %}" class="px-2 text-danger">Not Received</a>
                         </div>
+                        {% endif %}
                      </td>
                      <td>
+                        {% if p.breakfast_token == True %}
                         <div class="badge rounded-pill bg-light-success text-dark py-2">
-                           <a href="#" class="px-2 text-success">Received</a>
+                           <span class="px-2 text-success">Received</span>
                         </div>
+                        {% else %}
                         <div class="badge rounded-pill bg-light-danger text-info py-2">
-                           <a href="#" class="px-2 text-danger">Not Received</a>
+                           <a href="{% url 'App_Dashboard:breakfast_token' pk=p.id %}" class="px-2 text-danger">Not Received</a>
                         </div>
+                        {% endif %}
                      </td>
                      <td>
+                        {% if p.lunch_token == True %}
                         <div class="badge rounded-pill bg-light-success text-dark py-2">
-                           <a href="#" class="px-2 text-success">Received</a>
+                           <span class="px-2 text-success">Received</span>
                         </div>
+                        {% else %}
                         <div class="badge rounded-pill bg-light-danger text-info py-2">
-                           <a href="#" class="px-2 text-danger">Not Received</a>
+                           <a href="{% url 'App_Dashboard:lunch_token' pk=p.id %}" class="px-2 text-danger">Not Received</a>
+                        </div>
+                        {% endif %}
+                     </td>
+                     <td>
+                        {% if p.snacks_token == True %}
+                        <div class="badge rounded-pill bg-light-success text-dark py-2">
+                           <span class="px-2 text-success">Received</span>
+                        </div>
+                        {% else %}
+                        <div class="badge rounded-pill bg-light-danger text-info py-2">
+                           <a href="{% url 'App_Dashboard:snacks_token' pk=p.id %}" class="px-2 text-danger">Not Received</a>
+                        </div>
+                        {% endif %}
+                     </td>
+                     <td>
+                        {% if p.misc_token == True %}
+                        <div class="badge rounded-pill bg-light-success text-dark py-2">
+                           <span class="px-2 text-success">Received</span>
+                        </div>
+                        {% else %}
+                        <div class="badge rounded-pill bg-light-danger text-info py-2">
+                           <a href="{% url 'App_Dashboard:misc_token' pk=p.id %}" class="px-2 text-danger">Not Received</a>
                         </div>
                      </td>
+                     {% endif %}
                   </tr>
+                  {% endfor %}
                </tbody>
             </table>
          </div>

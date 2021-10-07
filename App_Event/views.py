@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Event, EventNotice, EventPhoto, EventVolunteer
 from .forms import EventForm, EventRegistrationForm, EventNoticeForm, EventPhotoForm
-from App_Participant.models import Participant
+from App_Participant.models import Participant, ParticipantStatus
 from App_Volunteer.models import Volunteer
 
 # Decorators
@@ -41,10 +41,11 @@ def EventRegistration(request, pk):
             participant.event_id = event.id
             event_reg_id = participant.event_reg_id
             if not Participant.objects.filter(event_reg_id=event_reg_id, event=event).exists():
-                Participant.objects.create(
-                    event_reg_id=event_reg_id, event=event, participant_name= participant.participant_name, 
-                    participant_email=participant.participant_email, phone_no=participant.phone_no, guests=participant.guests,
-                    fee_amount=participant.fee_amount, payment_status=participant.payment_status, transaction_id=participant.transaction_id
+                participant.save()
+                ParticipantStatus.objects.create(
+                    event=event, participant=participant, attendence=False, payment_status=False, payment_amount=0,
+                    transaction_id="none", kit_token=False, breakfast_token=False, lunch_token=False, snacks_token=False,
+                    misc_token=False
                 )
                 messages.success(request, f"Registration Successful in {event.event_title}. ")
                 return redirect("App_Event:event_details", pk=event.id)

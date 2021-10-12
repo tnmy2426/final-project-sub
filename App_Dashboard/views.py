@@ -43,7 +43,6 @@ def VerifyParticipant(request, pk):
     if participant.payment_status == False:
         participant.payment_status = True
         participant.participant_status.payment_status = True
-        print(participant)
         participant.save()
         status = ParticipantStatus.objects.get(event=participant.event, participant=participant)
         status.payment_status = True

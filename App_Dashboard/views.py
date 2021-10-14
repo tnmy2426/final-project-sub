@@ -1,5 +1,6 @@
 #For messages
 from django.contrib import messages
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 # Models
@@ -112,3 +113,15 @@ def MiscToken(request, pk):
         status.save()
         messages.success(request, f"{status.participant.event_reg_id} Misc received !!!")
     return redirect("App_Dashboard:active_event_details", pk=status.event.id)
+
+
+#-----------Dashboard for Volunteer---------------#
+
+@login_required
+@group_required("Volunteer")
+def VolunteerDashboard(request):
+    user = request.user
+    volunteer = Volunteer.objects.get(user=user)
+    event_volunteer = EventVolunteer.objects.get(volunteer=volunteer)
+    event = get_object_or_404(Event, id=event_volunteer.event.id)
+    return render (request, "App_Dashboard/volunteer_dashboard.html", {"event":event})

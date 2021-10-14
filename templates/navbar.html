@@ -31,7 +31,6 @@
             </li>
          </ul>
       </li>
-
       <li>
          <a href="{% url 'App_ClubAdmin:club_admin_profile' %}">
             <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
@@ -46,7 +45,7 @@
          </a>
          <ul>
             <li>
-               <a href="#"><i class="bx bx-right-arrow-alt"></i>Event List</a>
+               <a href="{% url 'App_Dashboard:volunteer_dashboard' %}"><i class="bx bx-right-arrow-alt"></i>My Event</a>
             </li>
          </ul>
       </li>
@@ -190,7 +189,9 @@
                   >
                </li>
                <li>
-                  <a class="dropdown-item" href="javascript:;"><i class="bx bx-home-circle"></i><span>Dashboard</span></a>
+                  <a class="dropdown-item" href="{% url 'App_Dashboard:volunteer_dashboard' %}"
+                     ><i class="bx bx-home-circle"></i><span>Dashboard</span></a
+                  >
                </li>
                <li>
                   <div class="dropdown-divider mb-0"></div>

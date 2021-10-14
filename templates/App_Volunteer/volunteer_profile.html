@@ -34,7 +34,9 @@
                            <p class="text-secondary mb-1">Volunteer</p>
                            <p class="text-muted font-size-sm">{{user.volunteer_user.phone_no}}</p>
                            <p class="text-muted font-size-sm">{{user.volunteer_user.address}}</p>
-                           <a href="#" class="btn btn-outline-info">Change Password</a>
+                           <a href="{% url 'App_Volunteer:volunteer_pass_change' %}" class="btn btn-outline-info"
+                              >Change Password</a
+                           >
                         </div>
                      </div>
                      <hr class="my-4" />

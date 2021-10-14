@@ -15,4 +15,5 @@ urlpatterns = [
     path('participant-lunch-token/<pk>/', views.LunchToken, name='lunch_token'),
     path('participant-snacks-token/<pk>/', views.SnacksToken, name='snacks_token'),
     path('participant-misc-token/<pk>/', views.MiscToken, name='misc_token'),
+    path('volunteer-dashboard/', views.VolunteerDashboard, name='volunteer_dashboard'),
 ]

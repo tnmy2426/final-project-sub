@@ -5,7 +5,8 @@ from django.contrib.auth.models import Group
 from App_Event.models import Event, EventVolunteer
 from App_Volunteer.models import Volunteer
 from .forms import CreateVolunteer, VolunteerProfileForm
-from django.views.generic import CreateView
+from django.contrib.auth.forms import PasswordChangeForm
+
 #Decorators
 from django.contrib.auth.decorators import login_required
 from App_ClubAdmin.decorators import group_required
@@ -63,3 +64,18 @@ def VolunteerProfile(request):
             messages.success(request, f"Profile information updated!!!")
             form = VolunteerProfileForm(instance=profile)
     return render(request, 'App_Volunteer/volunteer_profile.html', {"form":form})
+
+
+@login_required
+def pass_change(request):
+    current_user = request.user
+    changed = False
+    form = PasswordChangeForm(current_user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(current_user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            changed = True
+            messages.success(request, "You have successfully changed your password!!")
+            return redirect('App_ClubAdmin:login_view')
+    return render(request, 'App_Volunteer/change_password.html', context={'form':form})

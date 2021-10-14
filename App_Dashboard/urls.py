@@ -6,7 +6,8 @@ app_name = 'App_Dashboard'
 
 urlpatterns = [
     path('active-events/', views.ActiveEventList, name='active_event'),
-    path('active-event/<pk>/', views.ActiveEventDetails, name='active_event_details'),
+    path('deactivate-event/<pk>/', views.DeactivateEvent, name='deactivate_event'),
+    path('active-event-details/<pk>/', views.ActiveEventDetails, name='active_event_details'),
     path('event-participants/<pk>/', views.EventParticipantList, name='event_participants'),
     path('participant-verified/<pk>/', views.VerifyParticipant, name='verify_participant'),
     path('participant-attendence/<pk>/', views.Attendence, name='attendence_participant'),

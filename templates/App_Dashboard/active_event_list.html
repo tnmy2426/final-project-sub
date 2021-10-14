@@ -11,7 +11,7 @@
       </div>
    </div>
    <div class="product-list p-3 mb-3">
-      {% for event in events %}
+      {% for event in active_events %}
       <div class="row border mx-0 mb-3 py-2 radius-10 cursor-pointer">
          <div class="col-sm-6">
             <div class="d-flex align-items-center">
@@ -41,7 +41,11 @@
          </div>
 
          <div class="col-sm">
-            <div id="chart6" class="pt-2"><a href="#" class="btn btn-md btn-outline-danger">Deactivate Event</a></div>
+            <div id="chart6" class="pt-2">
+               <a href="{% url 'App_Dashboard:deactivate_event' pk=event.id %}" class="btn btn-md btn-outline-danger"
+                  >Deactivate Event</a
+               >
+            </div>
          </div>
       </div>
       {% endfor %}
@@ -57,8 +61,8 @@
       </div>
    </div>
    <div class="product-list p-3 mb-3">
+      {% for event in inactive_events %}
       <div class="row border mx-0 mb-3 py-2 radius-10 cursor-pointer">
-         {% for event in in_active_events %}
          <div class="col-sm-6">
             <div class="d-flex align-items-center">
                <div class="product-img">
@@ -70,8 +74,8 @@
                </div>
             </div>
          </div>
-         {% endfor %}
       </div>
+      {% endfor %}
    </div>
 </div>
 {% endblock body_block %}

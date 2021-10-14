@@ -20,10 +20,21 @@ User = get_user_model()
 @login_required
 @group_required("ClubAdmin")
 def ActiveEventList(request):
-    events = Event.objects.all()
-    in_active_events = Event.objects.filter(is_active=False)
-    context = {"events":events, "in_active_events":in_active_events}
+    active_events = Event.objects.filter(is_active=True)
+    inactive_events = Event.objects.filter(is_active=False)
+    context = {"active_events":active_events, "inactive_events":inactive_events}
     return render(request, "App_Dashboard/active_event_list.html", context)
+
+@login_required
+@group_required("ClubAdmin")
+def DeactivateEvent(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    if event.is_active == True:
+        event.is_active = False
+        event.save()
+        messages.warning(request, f"{event.event_title} Deactivated !!!")
+        return redirect("App_Dashboard:active_event")
+    return render(request, "App_Dashboard/active_event_list.html", {})
 
 @login_required
 def ActiveEventDetails(request, pk):

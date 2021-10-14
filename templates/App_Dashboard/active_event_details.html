@@ -13,7 +13,7 @@
                <li class="breadcrumb-item">
                   <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                </li>
-               <li class="breadcrumb-item active" aria-current="page">{{event_title}} Event Status</li>
+               <li class="breadcrumb-item active" aria-current="page">{{event.event_title}} Event Status</li>
             </ol>
          </nav>
       </div>
@@ -43,7 +43,7 @@
          <div class="card radius-10 overflow-hidden">
             <div class="card-body">
                <p class="text-dark font-20">Total Amount Received</p>
-               <h3>{{event.id|verified_participant}}</h3>
+               <h3>&#2547; {{event.id|total_amount|floatformat:2}}</h3>
                <div class="progress my-3 bg-danger" style="height: 3px"></div>
             </div>
          </div>

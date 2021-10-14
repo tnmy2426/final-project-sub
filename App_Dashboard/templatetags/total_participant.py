@@ -9,7 +9,7 @@ register = template.Library()
 @register.filter
 def verified_participant(id):
     event = get_object_or_404(Event, id=id)
-    participants = Participant.objects.filter(event=event, payment_status=True)
+    participants = ParticipantStatus.objects.filter(event=event, payment_status=True)
     return participants.count()
 
 
@@ -48,3 +48,12 @@ def available_snacks_token(id):
     event= get_object_or_404(Event, id=id)
     status = ParticipantStatus.objects.filter(event=event, payment_status=True, snacks_token=False)
     return status.count()
+
+@register.filter
+def total_amount(id):
+    event= get_object_or_404(Event, id=id)
+    participants = Participant.objects.filter(event=event, payment_status=True)
+    total = 0
+    for participant in participants:
+        total += participant.fee_amount
+    return float(total)

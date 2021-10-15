@@ -32,6 +32,12 @@ def DeactivateEvent(request, pk):
     if event.is_active == True:
         event.is_active = False
         event.save()
+        event_volunteers = EventVolunteer.objects.filter(event=event)
+        print(event_volunteers)
+        for event_volunteer in event_volunteers:
+            user = User.objects.get(username=event_volunteer, is_volunteer=True)
+            print(user)
+            user.delete()
         messages.warning(request, f"{event.event_title} Deactivated !!!")
         return redirect("App_Dashboard:active_event")
     return render(request, "App_Dashboard/active_event_list.html", {})

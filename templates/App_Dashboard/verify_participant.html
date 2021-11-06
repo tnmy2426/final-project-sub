@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} Verify Participant {% endblock title_block %}
+<!--Page content Here-->
+{% block body_block %}
+<!--start login form -->
+<div class="container">
+   <div class="card border-top border-0 border-4 border-dark">
+      <div class="card-body p-5 mx-5">
+         <div class="card-title text-center">
+            <h5 class="mt-2 text-dark">{{participant.event_reg_id}}</h5>
+            <p>{{participant.participant_name}}</p>
+         </div>
+         <hr />
+         <div class="row">
+            <div class="col-lg-4">
+               <div class="card bg-info">
+                  <div class="card-body">
+                     <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-transparent text-dark">
+                           <i class="bx bx-calendar font-18 align-middle me-1"></i> {{participant.event.event_title}}
+                        </li>
+                        <li class="list-group-item bg-transparent text-dark">
+                           <i class="bx bx-user font-18 align-middle me-1"></i> {{participant.participant_name}}
+                        </li>
+                        <li class="list-group-item bg-transparent text-dark">
+                           <i class="bx bx-mobile font-18 align-middle me-1"></i> {{participant.phone_no}}
+                        </li>
+                        <li class="list-group-item bg-transparent text-dark">
+                           <i class="bx bx-mail-send font-18 align-middle me-1"></i> {{participant.participant_email}}
+                        </li>
+                        <li class="list-group-item bg-transparent text-dark">
+                           <i class="bx bx-money font-18 align-middle me-1"></i>
+                           <span>&#2547;</span> {{participant.fee_amount}}
+                        </li>
+
+                        <li class="list-group-item bg-transparent text-dark">
+                           <i class="bx bx-group font-18 align-middle me-1"></i> {{participant.guests}}
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-8">
+               <div class="card bg-info">
+                  <div class="card-body">
+                     <form class="row g-3 mt-2 mx-auto px-3" method="POST">
+                        {% csrf_token %} {{ form|crispy }}
+                        <div class="d-grid">
+                           <button type="submit" class="btn btn-outline-dark px-5 text-light">Verify</button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <a
+            href="{% url 'App_Dashboard:event_participants' pk=participant.event_id %}"
+            class="btn w-100 btn-warning py-2 text-capitalize"
+            >Back to previous page</a
+         >
+      </div>
+   </div>
+   <!--end login form -->
+</div>
+
+{% endblock body_block %}

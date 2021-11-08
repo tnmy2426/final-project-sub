@@ -23,15 +23,15 @@
          {% endif %}
          <form class="row g-3 mt-4 mx-auto px-5" method="POST">
             {% csrf_token %} {{ form|crispy }}
-            <div class="card radius-10 w-50 mx-auto">
+            <div class="card radius-10 w-50 mx-auto mt-4">
                <div class="card-body">
                   <div class="d-flex align-items-center">
                      <div>
                         <h4 id="captcha" class="text-center font-35"></h4>
                      </div>
-                     <div id="reload-btn" class="widgets-icons bg-light-info text-info ms-auto">
+                     <button id="reload-btn" class="widgets-icons bg-light-info text-info ms-auto border-0">
                         <i class="lni lni-reload"></i>
-                     </div>
+                     </button>
                   </div>
                </div>
                <div class="card-footer">

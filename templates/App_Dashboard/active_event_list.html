@@ -1,7 +1,6 @@
 {% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} Create Event {% endblock title_block %}
 <!--Page content Here-->
 {% block body_block %}
-<!--start login form -->
 <div class="card radius-10 w-100">
    <div class="card-body">
       <div class="d-flex align-items-center">
@@ -36,6 +35,13 @@
             <div id="chart6" class="pt-2">
                <a href="{% url 'App_Dashboard:active_event_details' pk=event.id %}" class="btn btn-md btn-outline-info"
                   >Event Details</a
+               >
+            </div>
+         </div>
+         <div class="col-sm">
+            <div id="chart6" class="pt-2">
+               <a href="{% url 'App_Dashboard:event_volunteers' pk=event.id %}" class="btn btn-md btn-outline-info"
+                  >Volunteer List</a
                >
             </div>
          </div>
@@ -74,8 +80,8 @@
                </div>
             </div>
          </div>
-         <div class="col-sm-6 d-flex align-items-center">
-            <div id="chart6">
+         <div class="col-sm-6">
+            <div id="chart6" class="pt-2">
                <a href="{% url 'App_Dashboard:activate_event' pk=event.id %}" class="btn btn-md btn-outline-warning text-dark"
                   >Activate Event</a
                >

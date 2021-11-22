@@ -41,6 +41,13 @@ def EventParticipantList(request, pk):
     return render(request, "App_Dashboard/event_participant_list.html", {"participants":participants, "event":event})
 
 @login_required
+def EventVolunteerList(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    event_volunteers = EventVolunteer.objects.filter(event=event)
+    print(event_volunteers)
+    return render(request, "App_Dashboard/volunteer_list.html", {"event_volunteers":event_volunteers, "event":event})
+
+@login_required
 def VerifyParticipant(request, pk=None):
     participant = Participant.objects.get(id=pk)
     form = EventRegistrationForm(instance=participant)

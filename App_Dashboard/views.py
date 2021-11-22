@@ -78,6 +78,23 @@ def DeactivateEvent(request, pk):
         return redirect("App_Dashboard:active_event")
     return render(request, "App_Dashboard/active_event_list.html", {})
 
+@login_required
+@group_required("ClubAdmin")
+def ActivateEvent(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    if event.is_active == False:
+        event.is_active = True
+        event.save()
+        # event_volunteers = EventVolunteer.objects.filter(event=event)
+        # print(event_volunteers)
+        # for event_volunteer in event_volunteers:
+            # user = User.objects.get(username=event_volunteer, is_volunteer=True)
+            # print(user)
+            # user.delete()
+        messages.success(request, f"{event.event_title} Activated Again !!!")
+        return redirect("App_Dashboard:active_event")
+    return render(request, "App_Dashboard/active_event_list.html", {})
+
 #-----------------Views for Main Dashboard for a single Event---------------#
 
 @login_required

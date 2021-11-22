@@ -74,6 +74,13 @@
                </div>
             </div>
          </div>
+         <div class="col-sm-6 d-flex align-items-center">
+            <div id="chart6">
+               <a href="{% url 'App_Dashboard:activate_event' pk=event.id %}" class="btn btn-md btn-outline-warning text-dark"
+                  >Activate Event</a
+               >
+            </div>
+         </div>
       </div>
       {% endfor %}
    </div>

@@ -13,6 +13,7 @@ urlpatterns = [
 
     #URLs for active/deactive an Envent.
     path('deactivate-event/<pk>/', views.DeactivateEvent, name='deactivate_event'),
+    path('activate-event/<pk>/', views.ActivateEvent, name='activate_event'),
     
     #URLs for Main Dashboard for a single Event.
     path('participant-attendence/<pk>/', views.Attendence, name='attendence_participant'),

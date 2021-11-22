@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title_block %} Confirmed {% endblock title_block %}
+<!--Content here-->
+{% block body_block %}
+<div class="card radius-10">
+   <div class="card-body">
+      <div class="text-center">
+         <div class="widgets-icons rounded-circle mx-auto bg-light-success text-success mb-3">
+            <i class="lni lni-emoji-smile"></i>
+         </div>
+         <h4 class="my-3">Thanks for confirm your email & event registration!!!</h4>
+         <a href="{% url 'App_Event:event_list' %}" class="btn btn-info">Back To Homepage</a>
+      </div>
+   </div>
+</div>
+{% endblock body_block %}

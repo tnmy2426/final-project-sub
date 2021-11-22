@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+#~~~~~~~~~~~~~~Views for ClubAdmin users~~~~~~~~~~~~~~~~
 def ClubAdminSignup(request):
     form = CreateNewUser()
     if request.method == "POST":
@@ -30,29 +31,6 @@ def ClubAdminSignup(request):
             return HttpResponseRedirect(reverse('App_Event:event_list'))
     context ={'form': form}
     return render(request, 'App_ClubAdmin/signup_clubadmin.html', context)
-
-def LoginView(request):
-    form = LoginUser()
-    if request.method == "POST":
-        form = LoginUser(data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, "Logged in")
-                return HttpResponseRedirect(reverse('App_Event:event_list'))
-            else:
-                messages.error(request, "Username or Password Incorrect")
-    context = {'form': form}
-    return render(request, 'App_ClubAdmin/login_page.html', context)
-
-@login_required
-def LogoutView(request):
-    logout(request)
-    messages.success(request, "You have been logged out successfully!")
-    return HttpResponseRedirect(reverse('App_Event:event_list'))
 
 @login_required
 @group_required("ClubAdmin")
@@ -79,3 +57,28 @@ def AddProfilePic(request):
             messages.success(request, "Profile Picture Added Successfully!!")
             return HttpResponseRedirect(reverse('App_ClubAdmin:club_admin_profile'))
     return render(request, 'App_ClubAdmin/pro_pic_add.html', context={'form':form})
+
+#~~~~~~~~~~~~~~Views for ClubAdmin & Volunteer users~~~~~~~~~~~~~~~~
+
+def LoginView(request):
+    form = LoginUser()
+    if request.method == "POST":
+        form = LoginUser(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Logged in")
+                return HttpResponseRedirect(reverse('App_Event:event_list'))
+            else:
+                messages.error(request, "Username or Password Incorrect")
+    context = {'form': form}
+    return render(request, 'App_ClubAdmin/login_page.html', context)
+
+@login_required
+def LogoutView(request):
+    logout(request)
+    messages.success(request, "You have been logged out successfully!")
+    return HttpResponseRedirect(reverse('App_Event:event_list'))

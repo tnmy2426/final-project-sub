@@ -18,7 +18,7 @@ from App_ClubAdmin.decorators import group_required
 User = get_user_model()
 # Create your views here.
 
-#Views for active Events
+#~~~~~~~~~~~~~~~~ Views for active Events ~~~~~~~~~~~~~~~~~~~
 @login_required
 @group_required("ClubAdmin")
 def ActiveEventList(request):
@@ -37,7 +37,7 @@ def ActiveEventDetails(request, pk):
 @login_required
 def EventParticipantList(request, pk):
     event = get_object_or_404(Event, pk=pk)
-    participants = Participant.objects.filter(event=event, payment_status=False)
+    participants = Participant.objects.filter(event=event, payment_status=False, email_confirmed=True)
     return render(request, "App_Dashboard/event_participant_list.html", {"participants":participants, "event":event})
 
 @login_required

@@ -1,0 +1,3 @@
+{% autoescape off %} Hi {{ participant_name }}, Congratulations !!! Your registration for {{ event }} is complete. Please click
+the link below to confirm your registration. http://{{ domain }}{% url 'App_Event:confirm_registration' token=token %} Best
+Regards SUB Computing Club {% endautoescape%}

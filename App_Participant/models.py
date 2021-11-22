@@ -6,7 +6,7 @@ from App_Event.models import Event
 
 class Participant(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event_participant")
-    event_reg_id = models.CharField(max_length=20, blank=False)
+    event_reg_id = models.CharField(max_length=20, blank=False, unique=True)
     participant_name = models.CharField(max_length=20, blank=False)
     participant_email = models.EmailField(max_length=254, blank=False)
     phone_no = models.CharField(max_length=20, blank=False)
@@ -14,6 +14,8 @@ class Participant(models.Model):
     fee_amount = models.FloatField(default=0.00)
     payment_status = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=20, blank=True, null=True)
+    email_confirmed = models.BooleanField(default=False)
+    token = models.CharField(max_length=264, blank=True)
 
     def __str__(self):
         return f"{self.participant_name}"
@@ -22,8 +24,6 @@ class ParticipantStatus(models.Model):
     participant = models.OneToOneField(Participant, on_delete=models.CASCADE, related_name="participant_status")
     attendence = models.BooleanField(default=False)
     payment_status = models.BooleanField(default=False)
-    payment_amount = models.FloatField(default=0.00)
-    transaction_id = models.CharField(max_length=20, blank=True)
     kit_token = models.BooleanField(default=False)
     breakfast_token = models.BooleanField(default=False)
     lunch_token = models.BooleanField(default=False)

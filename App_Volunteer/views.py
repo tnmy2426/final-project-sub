@@ -18,6 +18,7 @@ from django.contrib import messages
 
 User = get_user_model()
 
+#~~~~~~~~~~~~~~Views for Volunteer users~~~~~~~~~~~~~~~~
 
 def AddVolunteer(request, pk):
     event = get_object_or_404(Event, pk=pk)
@@ -40,16 +41,6 @@ def AddVolunteer(request, pk):
             messages.success(request, 'Volunteer Added!!!')
             return redirect("App_Event:event_details", pk=event.id)
     return render(request, "App_Volunteer/add_volunteer.html", {"form":form})
-
-@login_required
-@group_required("ClubAdmin")
-def DeleteVolunteer(request, pk):
-    event_volunteer = EventVolunteer.objects.get(id=pk)
-    event_volunteer.delete()
-    event_volunteer.volunteer.delete()
-    event_volunteer.volunteer.user.delete()
-    messages.warning(request, f"{event_volunteer.volunteer.user.full_name} Volunteer removed!!")
-    return redirect("App_Event:event_list")
 
 
 @login_required
@@ -79,3 +70,15 @@ def pass_change(request):
             messages.success(request, "You have successfully changed your password!!")
             return redirect('App_ClubAdmin:login_view')
     return render(request, 'App_Volunteer/change_password.html', context={'form':form})
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~ Views for ClubAdmin users ~~~~~~~~~~~~~~~~~~~~~~~~
+
+@login_required
+@group_required("ClubAdmin")
+def DeleteVolunteer(request, pk):
+    event_volunteer = EventVolunteer.objects.get(id=pk)
+    event_volunteer.delete()
+    event_volunteer.volunteer.delete()
+    event_volunteer.volunteer.user.delete()
+    messages.warning(request, f"{event_volunteer.volunteer.user.full_name} Volunteer removed!!")
+    return redirect("App_Event:event_list")

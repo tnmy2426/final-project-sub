@@ -1,10 +1,15 @@
-
+import hashlib
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Event, EventNotice, EventPhoto, EventVolunteer
 from .forms import EventForm, EventRegistrationForm, EventNoticeForm, EventPhotoForm
 from App_Participant.models import Participant, ParticipantStatus
 from App_Volunteer.models import Volunteer
+
+#For email sending
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 
 # Decorators
 from django.contrib.auth.decorators import login_required
@@ -13,7 +18,9 @@ from App_ClubAdmin.decorators import group_required
 #For messages
 from django.contrib import messages
 
-# Create your views here.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Create your views here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#~~~~~~~~~~~~~~Views for all users~~~~~~~~~~~~~~~~
 
 def EventList(request):
     events = Event.objects.filter(is_active=True)
@@ -37,24 +44,63 @@ def EventRegistration(request, pk):
     if request.method == "POST":
         form = EventRegistrationForm(request.POST or None)
         if form.is_valid():
+            get_email = form.cleaned_data.get('participant_email')
+            print(get_email)
             participant = form.save(commit=False)
             participant.event_id = event.id
             event_reg_id = participant.event_reg_id
             if not Participant.objects.filter(event_reg_id=event_reg_id, event=event).exists():
+                participant.email_confirmed = False
+                participant_encoded = f'{participant.event_reg_id}'.encode()
+                token = hashlib.sha224(participant_encoded).hexdigest()
+                participant.token = token
                 participant.save()
-                ParticipantStatus.objects.create(
-                    event=event, participant=participant, attendence=False, payment_status=False, payment_amount=0,
-                    transaction_id="none", kit_token=False, breakfast_token=False, lunch_token=False, snacks_token=False,
-                    misc_token=False
+
+                #sending Email
+                current_site  = get_current_site(request)
+                email = get_email
+                mail_subject = 'Confirm your registration.'
+                email_body = render_to_string(
+                    'App_Event/verify_email.html',
+                        {
+                            'event': event,
+                            'participant': participant,
+                            'event_reg_id': event_reg_id,
+                            'email': email,
+                            'participant_name':participant.participant_name,
+                            'domain': current_site.domain,
+                            'token': participant.token
+                        }
                 )
-                messages.success(request, f"Registration Successful in {event.event_title}. ")
-                return redirect("App_Event:event_details", pk=event.id)
+                send_mail(
+                    subject=mail_subject,
+                    message= email_body,
+                    from_email='abdullah.al.nahdi2426@gmail.com',
+                    recipient_list=[email],
+                    fail_silently=True
+                )
+
+                # messages.success(request, f"Registration Successful in {event.event_title}. ")
+                return render(request, "App_Event/register_start.html", {})
             else:
                 form = EventRegistrationForm()
                 error_message = f"{event_reg_id} ID already taken!!!"
                 return render(request, "App_Event/event_registration.html", {"form":form, "error_message":error_message})
     return render(request, "App_Event/event_registration.html", {"form":form})
 
+def ConfirmRegistration(request, token):
+    participant = get_object_or_404(Participant, token=token)
+    if participant is not None:
+        participant.email_confirmed = True
+        participant.save()
+        ParticipantStatus.objects.create(
+                event=participant.event, participant=participant, attendence=False, payment_status=False,kit_token=False, 
+                breakfast_token=False, lunch_token=False, snacks_token=False, misc_token=False
+        )
+        return render(request, "App_Event/register_end.html", {})
+    
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Views for ClubAdmins ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 @login_required
 @group_required("ClubAdmin")

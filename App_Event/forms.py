@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import models
-from django.db.models import fields
+from django.contrib.admin.widgets import AdminDateWidget
 from .models import Event, EventPhoto, EventNotice
 from App_Participant.models import Participant
 

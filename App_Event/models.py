@@ -1,7 +1,5 @@
 from django.db import models
 from django.conf import settings
-from django.shortcuts import get_object_or_404, render
-from App_ClubAdmin.models import ClubAdmin
 from App_Volunteer.models import Volunteer
 
 from django.contrib.auth import get_user_model

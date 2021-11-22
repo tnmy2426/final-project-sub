@@ -12,4 +12,5 @@ urlpatterns = [
     path('delete-event-photo/<pk>/', views.DeleteEventPhoto, name='delete_event_photo'),
     path('create-event/', views.CreateEvent, name='create_event'),
     path('event-registration/<pk>/', views.EventRegistration, name='event_registration_view'),
+    path('confirm-registration/<str:token>/', views.ConfirmRegistration, name='confirm_registration'),
 ]

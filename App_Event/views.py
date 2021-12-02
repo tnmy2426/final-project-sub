@@ -23,8 +23,12 @@ from django.contrib import messages
 #~~~~~~~~~~~~~~Views for all users~~~~~~~~~~~~~~~~
 
 def EventList(request):
-    events = Event.objects.filter(is_active=True)
+    events = Event.objects.filter(is_active=True, fee_required=True)
     return render(request, "App_Event/event_list.html", {"events":events})
+
+def FreeEventList(request):
+    free_events = Event.objects.filter(is_active=True, fee_required=False)
+    return render(request, "App_Event/free_event_list.html", {"free_events":free_events})
 
 def EventDetails(request, pk):
     event = get_object_or_404(Event, pk=pk)
@@ -38,6 +42,7 @@ def EventDetails(request, pk):
     }
     return render(request, "App_Event/event_details.html", context)
 
+#---Event registration with email confirmation view----
 def EventRegistration(request, pk):
     event = get_object_or_404(Event, pk=pk)
     form = EventRegistrationForm()

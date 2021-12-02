@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title_block %} Free Events of SUB {% endblock title_block %}
+<!--Start Page content-->
+{% block body_block %}
+<div class="page-content">
+   <!--breadcrumb-->
+   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+      <div class="breadcrumb-title pe-3">SUB Computing Club</div>
+      <div class="ps-3">
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+               <li class="breadcrumb-item">
+                  <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+               </li>
+               <li class="breadcrumb-item active" aria-current="page">Events</li>
+            </ol>
+         </nav>
+      </div>
+   </div>
+   <!--end breadcrumb-->
+   <h6 class="mb-0 text-uppercase">Events of SUB Computing Club</h6>
+   <hr />
+   <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-3">
+      {% for event in free_events %}
+      <div class="col">
+         <div class="card">
+            <img src="/media/{{event.event_banner}}" class="card-img-top" alt="..." />
+            <div class="card-body">
+               <h5 class="card-title">{{ event.event_title }}</h5>
+               <p class="card-text">{{event.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item">Venue: {{event.venue}}</li>
+               <li class="list-group-item">Start Time: {{event.start_datetime}}</li>
+               <li class="list-group-item">End Time: {{event.end_datetime}}</li>
+               <li class="list-group-item">Registration Deadline: {{event.registration_deadline}}</li>
+            </ul>
+            <div class="card-body d-flex justify-content-between">
+               <a href="{% url 'App_Event:event_details' pk=event.pk %}" class="btn btn-outline-info px-5">View Details</a>
+               <a href="{% url 'App_Event:event_registration_view' pk=event.pk %}" class="btn btn-success px-5">Register Here</a>
+            </div>
+         </div>
+      </div>
+      {% endfor %}
+   </div>
+   <!--end row-->
+</div>
+{% endblock body_block %}
+<!--Start Page content-->

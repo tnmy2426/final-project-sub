@@ -35,8 +35,8 @@ def EventDetails(request, pk):
     event_notices = EventNotice.objects.filter(event=event)
     event_photos = EventPhoto.objects.filter(event=event)
     event_volunteers = EventVolunteer.objects.filter(event=event)
-    for volunteer in event_volunteers:
-        print(volunteer)
+    # for volunteer in event_volunteers:
+    #     print(volunteer)
     context = {
         "event":event, "event_notices": event_notices, "event_photos":event_photos, "event_volunteers":event_volunteers
     }
@@ -50,47 +50,62 @@ def EventRegistration(request, pk):
         form = EventRegistrationForm(request.POST or None)
         if form.is_valid():
             get_email = form.cleaned_data.get('participant_email')
-            print(get_email)
+            # print(get_email)
             participant = form.save(commit=False)
             participant.event_id = event.id
+            # print(event.id)
             event_reg_id = participant.event_reg_id
-            if not Participant.objects.filter(event_reg_id=event_reg_id, event=event).exists():
-                participant.email_confirmed = False
-                participant_encoded = f'{participant.event_reg_id}'.encode()
-                token = hashlib.sha224(participant_encoded).hexdigest()
-                participant.token = token
-                participant.save()
+            participant_exist = Participant.objects.filter(event=event.id, event_reg_id=event_reg_id)
+            participant_email_exist = Participant.objects.filter(event=event.id, participant_email=get_email)
+            # print(participant_exist)
+            # print(participant_email_exist)
+            if not participant_exist.exists():
+                if not participant_email_exist.exists():
+                    participant.email_confirmed = False
+                    event_encoded = f'{participant.event}'.encode()
+                    email_encoded = f'{participant.participant_email}'.encode()
+                    participant_encoded = event_encoded + email_encoded
+                    token = hashlib.sha224(participant_encoded).hexdigest()
+                    participant.token = token
+                    participant.save()
+                    # print(participant)
 
-                #sending Email
-                current_site  = get_current_site(request)
-                email = get_email
-                mail_subject = 'Confirm your registration.'
-                email_body = render_to_string(
-                    'App_Event/verify_email.html',
-                        {
-                            'event': event,
-                            'participant': participant,
-                            'event_reg_id': event_reg_id,
-                            'email': email,
-                            'participant_name':participant.participant_name,
-                            'domain': current_site.domain,
-                            'token': participant.token
-                        }
-                )
-                send_mail(
-                    subject=mail_subject,
-                    message= email_body,
-                    from_email='abdullah.al.nahdi2426@gmail.com',
-                    recipient_list=[email],
-                    fail_silently=True
-                )
+                    #sending Email
+                    current_site  = get_current_site(request)
+                    email = get_email
+                    mail_subject = 'Confirm your registration.'
+                    email_body = render_to_string(
+                        'App_Event/verify_email.html',
+                            {
+                                'event': event,
+                                'participant': participant,
+                                'event_reg_id': event_reg_id,
+                                'email': email,
+                                'participant_name':participant.participant_name,
+                                'domain': current_site.domain,
+                                'token': participant.token
+                            }
+                    )
+                    send_mail(
+                        subject=mail_subject,
+                        message= email_body,
+                        from_email='abdullah.al.nahdi2426@gmail.com',
+                        recipient_list=['al.nahdi.tnmy@gmail.com',], #email
+                        fail_silently=True
+                    )
 
-                # messages.success(request, f"Registration Successful in {event.event_title}. ")
-                return render(request, "App_Event/register_start.html", {})
+                    # messages.success(request, f"Registration Successful in {event.event_title}. ")
+                    return render(request, "App_Event/register_start.html", {})
+                else:
+                    error_message2 = f"{get_email} Email already taken!!!"
+                    data = {"form":form, "error_message2":error_message2}
+                    return render(request, "App_Event/event_registration.html", data)
             else:
                 form = EventRegistrationForm()
-                error_message = f"{event_reg_id} ID already taken!!!"
-                return render(request, "App_Event/event_registration.html", {"form":form, "error_message":error_message})
+                error_message1 = f"{event_reg_id} ID already taken!!!"
+                
+                data = {"form":form, "error_message1":error_message1}
+                return render(request, "App_Event/event_registration.html", data)
     return render(request, "App_Event/event_registration.html", {"form":form})
 
 def ConfirmRegistration(request, token):

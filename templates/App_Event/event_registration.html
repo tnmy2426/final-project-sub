@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} Create Event {% endblock title_block %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} Event Registration {% endblock title_block %}
 <!--Page content Here-->
 {% block body_block %}
 <!--start login form -->
@@ -10,17 +10,29 @@
             <h5 class="mb-5 mt-2 text-dark">Event Registration</h5>
          </div>
          <hr />
-         {% if error_message %}
+
+         {% if error_message1 %}
          <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show py-2">
             <div class="d-flex align-items-center">
                <div class="font-35 text-white"><i class="bx bxs-{{ message.tags }}-square-x"></i></div>
                <div class="ms-3">
-                  <h6 class="mb-0 text-white">{{ error_message }}</h6>
+                  <h6 class="mb-0 text-white">{{ error_message1 }}</h6>
+               </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+         {% elif error_message2 %}
+         <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show py-2">
+            <div class="d-flex align-items-center">
+               <div class="font-35 text-white"><i class="bx bxs-{{ message.tags }}-square-x"></i></div>
+               <div class="ms-3">
+                  <h6 class="mb-0 text-white">{{ error_message2 }}</h6>
                </div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
          </div>
          {% endif %}
+
          <form class="row g-3 mt-4 mx-auto px-5" method="POST">
             {% csrf_token %} {{ form|crispy }}
             <div class="card radius-10 w-50 mx-auto mt-4">
@@ -165,11 +177,11 @@
          //if captcha matched
          statusTxt.style.color = "#17A00E";
          statusTxt.innerText = "Nice! You don't appear to be a robot.";
-         setTimeout(() => {
-            //calling removeContent & getCaptcha after 2 seconds
-            removeContent();
-            getCaptcha();
-         }, 5000);
+         //setTimeout(() => {
+         //calling removeContent & getCaptcha after 2 seconds
+         //removeContent();
+         //getCaptcha();
+         //}, 10000);
       } else {
          statusTxt.style.color = "#F42236";
          statusTxt.innerText = "Captcha not matched. Please try again!";

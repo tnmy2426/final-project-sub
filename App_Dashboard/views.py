@@ -18,6 +18,13 @@ from App_ClubAdmin.decorators import group_required
 User = get_user_model()
 # Create your views here.
 
+#~~~~~~~~~~~~~~~~ Views for Inactive Events ~~~~~~~~~~~~~~~~~~~
+def InactiveEventList(request):
+    inactive_events = Event.objects.filter(is_active=False)
+    context = {"inactive_events":inactive_events}
+    return render(request, "App_Dashboard/deactive_event_list.html", context)
+
+
 #~~~~~~~~~~~~~~~~ Views for active Events ~~~~~~~~~~~~~~~~~~~
 @login_required
 @group_required("ClubAdmin")
@@ -44,8 +51,8 @@ def EventParticipantList(request, pk):
 def EventVolunteerList(request, pk):
     event = get_object_or_404(Event, pk=pk)
     event_volunteers = EventVolunteer.objects.filter(event=event)
-    print(event_volunteers)
-    return render(request, "App_Dashboard/volunteer_list.html", {"event_volunteers":event_volunteers, "event":event})
+    # print(event_volunteers)
+    return render(request, "App_Dashboard/event_volunteer_list.html", {"event_volunteers":event_volunteers, "event":event})
 
 @login_required
 def VerifyParticipant(request, pk=None):
@@ -67,7 +74,7 @@ def VerifyParticipant(request, pk=None):
         context= {"form":form, "participant":participant}
     return render(request, "App_Dashboard/verify_participant.html", context )
 
-#Views for active/deactive an Envent.
+#Views for active/deactive an Event.
 @login_required
 @group_required("ClubAdmin")
 def DeactivateEvent(request, pk):
@@ -75,15 +82,15 @@ def DeactivateEvent(request, pk):
     if event.is_active == True:
         event.is_active = False
         event.save()
-        event_volunteers = EventVolunteer.objects.filter(event=event)
-        print(event_volunteers)
-        for event_volunteer in event_volunteers:
-            user = User.objects.get(username=event_volunteer, is_volunteer=True)
-            print(user)
-            user.delete()
+        # event_volunteers = EventVolunteer.objects.filter(event=event)
+        # print(event_volunteers)
+        # for event_volunteer in event_volunteers:
+        #     user = User.objects.get(username=event_volunteer, is_volunteer=True)
+        #     print(user)
+        #     user.delete()
         messages.warning(request, f"{event.event_title} Deactivated !!!")
         return redirect("App_Dashboard:active_event")
-    return render(request, "App_Dashboard/active_event_list.html", {})
+    return render(request, "App_Dashboard/deactive_event_list.html", {})
 
 @login_required
 @group_required("ClubAdmin")
@@ -92,12 +99,6 @@ def ActivateEvent(request, pk):
     if event.is_active == False:
         event.is_active = True
         event.save()
-        # event_volunteers = EventVolunteer.objects.filter(event=event)
-        # print(event_volunteers)
-        # for event_volunteer in event_volunteers:
-            # user = User.objects.get(username=event_volunteer, is_volunteer=True)
-            # print(user)
-            # user.delete()
         messages.success(request, f"{event.event_title} Activated Again !!!")
         return redirect("App_Dashboard:active_event")
     return render(request, "App_Dashboard/active_event_list.html", {})

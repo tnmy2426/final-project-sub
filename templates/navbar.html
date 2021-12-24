@@ -27,7 +27,24 @@
                <a href="{% url 'App_Dashboard:active_event' %}"><i class="bx bx-right-arrow-alt"></i>Active Events</a>
             </li>
             <li>
+               <a href="{% url 'App_Dashboard:inactive_event' %}"><i class="bx bx-right-arrow-alt"></i>Inactive Events</a>
+            </li>
+            <li>
+               <a href="{% url 'App_Volunteer:volunteer_list' %}"><i class="bx bx-right-arrow-alt"></i>Volunteer List</a>
+            </li>
+            <li>
                <a href="{% url 'App_Event:create_event' %}"><i class="bx bx-plus"></i>Add New Event</a>
+            </li>
+         </ul>
+      </li>
+      <li>
+         <a href="{% url 'App_Event:event_list' %}" class="has-arrow">
+            <div class="parent-icon"><i class="bx bx-calendar"></i></div>
+            <div class="menu-title">Events</div>
+         </a>
+         <ul>
+            <li>
+               <a href="{% url 'App_Event:free_event_list' %}"><i class="bx bx-right-arrow-alt"></i>Free Events</a>
             </li>
          </ul>
       </li>

@@ -20,4 +20,4 @@ class CreateVolunteer(UserCreationForm):
 class VolunteerProfileForm(forms.ModelForm):
     class Meta:
         model = Volunteer
-        fields = ("gender", "phone_no", "address")
+        fields = ("phone_no", "address")

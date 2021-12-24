@@ -25,7 +25,7 @@ def ClubAdminSignup(request):
             user.is_clubAdmin = True
             user.save()
             group = Group.objects.get(name='ClubAdmin')
-            print(group)
+            # print(group)
             user.groups.add(group)
             messages.success(request, 'Registration Successfull. Your profile will be verified by an Admin!')
             return HttpResponseRedirect(reverse('App_Event:event_list'))

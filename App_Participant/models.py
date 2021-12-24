@@ -6,7 +6,7 @@ from App_Event.models import Event
 
 class Participant(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name="event_participant")
-    event_reg_id = models.CharField(max_length=20, blank=False, unique=True)
+    event_reg_id = models.CharField(max_length=20, blank=False)
     participant_name = models.CharField(max_length=20, blank=False)
     participant_email = models.EmailField(max_length=254, blank=False)
     phone_no = models.CharField(max_length=20, blank=False)

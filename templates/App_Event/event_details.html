@@ -169,7 +169,6 @@
                            <tr>
                               <th>#</th>
                               <th>Volunteer Name</th>
-                              <th>Gender</th>
                               <th>Phone No</th>
                               <th>Volunteer ID</th>
                               {% if request.user.is_authenticated and request.user|has_group:"ClubAdmin" %}
@@ -188,9 +187,6 @@
                                  </div>
                               </td>
                               <td>{{volunteer.volunteer.user.full_name}}</td>
-                              <td>
-                                 <div class="text-success text-uppercase">{{volunteer.volunteer.gender}}</div>
-                              </td>
                               <td>{{volunteer.volunteer.phone_no}}</td>
                               <td>{{volunteer.volunteer.user.username}}</td>
                               {% if request.user.is_authenticated and request.user|has_group:"ClubAdmin" %}

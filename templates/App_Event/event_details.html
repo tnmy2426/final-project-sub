@@ -171,9 +171,6 @@
                               <th>Volunteer Name</th>
                               <th>Phone No</th>
                               <th>Volunteer ID</th>
-                              {% if request.user.is_authenticated and request.user|has_group:"ClubAdmin" %}
-                              <th>Actions</th>
-                              {% endif %}
                            </tr>
                         </thead>
                         <tbody>
@@ -189,15 +186,6 @@
                               <td>{{volunteer.volunteer.user.full_name}}</td>
                               <td>{{volunteer.volunteer.phone_no}}</td>
                               <td>{{volunteer.volunteer.user.username}}</td>
-                              {% if request.user.is_authenticated and request.user|has_group:"ClubAdmin" %}
-                              <td>
-                                 <div class="d-flex order-actions">
-                                    <a href="{% url 'App_Volunteer:delete_volunteer' pk=volunteer.id %}" class="ms-3"
-                                       ><i class="bx bxs-trash"></i
-                                    ></a>
-                                 </div>
-                              </td>
-                              {% endif %}
                            </tr>
                            {% endfor %}
                         </tbody>

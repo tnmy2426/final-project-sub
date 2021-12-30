@@ -11,6 +11,8 @@ urlpatterns = [
     path('active-event-details/<pk>/', views.ActiveEventDetails, name='active_event_details'),
     path('event-participants/<pk>/', views.EventParticipantList, name='event_participants'),
     path('event-volunteers/<pk>/', views.EventVolunteerList, name='event_volunteers'),
+    path('add-volunteers-to-event/<e_id>/<v_id>/', views.AddToEvent, name='add_to_event'),
+    path('remove-volunteers-from-event/<pk>/', views.RemoveFromEvent, name='remove_from_event'),
     path('participant-verified/<pk>/', views.VerifyParticipant, name='verify_participant'),
 
     #URLs for active/deactive an Envent.

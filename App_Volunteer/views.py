@@ -26,7 +26,6 @@ def VolunteerList(request):
 
 def AddVolunteer(request, pk):
     event = get_object_or_404(Event, pk=pk)
-    volunteers = Volunteer.objects.all()
     form = CreateVolunteer()
     if request.method == "POST":
         form = CreateVolunteer(request.POST or None)
@@ -45,7 +44,7 @@ def AddVolunteer(request, pk):
             event_volunteer.save()
             messages.success(request, 'Volunteer Added!!!')
             return redirect("App_Event:event_details", pk=event.id)
-    return render(request, "App_Volunteer/add_volunteer.html", {"form":form, "volunteers":volunteers, "event":event})
+    return render(request, "App_Volunteer/add_volunteer.html", {"form":form, "event":event})
 
 
 @login_required
@@ -81,9 +80,8 @@ def pass_change(request):
 @login_required
 @group_required("ClubAdmin")
 def DeleteVolunteer(request, pk):
-    event_volunteer = EventVolunteer.objects.get(id=pk)
-    event_volunteer.delete()
-    # event_volunteer.volunteer.delete()
-    event_volunteer.volunteer.user.is_active = False
-    messages.warning(request, f"{event_volunteer.volunteer.user.full_name} Volunteer removed!!")
-    return redirect("App_Event:event_list")
+    volunteer = Volunteer.objects.get(id=pk)
+    volunteer.delete()
+    volunteer.user.delete()
+    messages.warning(request, f"{volunteer.user.full_name} Volunteer removed!!")
+    return redirect("App_Volunteer:volunteer_list")

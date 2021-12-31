@@ -62,7 +62,18 @@
          </a>
          <ul>
             <li>
-               <a href="{% url 'App_Dashboard:volunteer_dashboard' %}"><i class="bx bx-right-arrow-alt"></i>My Event</a>
+               <a href="{% url 'App_Dashboard:volunteer_dashboard' %}"><i class="bx bx-right-arrow-alt"></i>My Events</a>
+            </li>
+         </ul>
+      </li>
+      <li>
+         <a href="{% url 'App_Event:event_list' %}" class="has-arrow">
+            <div class="parent-icon"><i class="bx bx-calendar"></i></div>
+            <div class="menu-title">Events</div>
+         </a>
+         <ul>
+            <li>
+               <a href="{% url 'App_Event:free_event_list' %}"><i class="bx bx-right-arrow-alt"></i>Free Events</a>
             </li>
          </ul>
       </li>

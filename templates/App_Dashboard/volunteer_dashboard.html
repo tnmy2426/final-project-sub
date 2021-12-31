@@ -1,43 +1,49 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block title_block %} Dashboard {% endblock title_block %}
-<!--Page content Here-->
+{% extends 'base.html' %} {% block title_block %} Browse Events of SUB {% endblock title_block %}
+<!--Start Page content-->
 {% block body_block %}
-<!--start login form -->
-<div class="card radius-10 w-100">
-   <div class="card-body">
-      <div class="d-flex align-items-center">
-         <div>
-            <h5 class="mb-1">My Event</h5>
-         </div>
+<div class="page-content">
+   <!--breadcrumb-->
+   <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+      <div class="breadcrumb-title pe-3">SUB Computing Club</div>
+      <div class="ps-3">
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+               <li class="breadcrumb-item">
+                  <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+               </li>
+               <li class="breadcrumb-item active" aria-current="page">My Events</li>
+            </ol>
+         </nav>
       </div>
    </div>
-   <div class="product-list p-3 mb-3">
-      <div class="row border mx-0 mb-3 py-2 radius-10 cursor-pointer">
-         <div class="col-sm-6">
-            <div class="d-flex align-items-center">
-               <div class="product-img">
-                  <img src="/media/{{event.event_banner}}" alt="" />
-               </div>
-               <div class="ms-2">
-                  <h6 class="mb-1">{{event.event_title}}</h6>
-                  <p class="mb-0">{{event.venue}}</p>
-               </div>
+   <!--end breadcrumb-->
+   <h6 class="mb-0 text-uppercase">Events of SUB Computing Club</h6>
+   <hr />
+   <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-3">
+      {% for e_v in event_volunteers %}
+      <div class="col">
+         <div class="card">
+            <img src="/media/{{e_v.event.event_banner}}" class="card-img-top" alt="..." />
+            <div class="card-body">
+               <h5 class="card-title">{{ e_v.event.event_title }}</h5>
+               <p class="card-text">{{e_v.event.description}}</p>
             </div>
-         </div>
-         <div class="col-sm">
-            <div id="chart6" class="pt-2">
-               <a href="{% url 'App_Dashboard:event_participants' pk=event.id %}" class="btn btn-md btn-outline-info"
-                  >Event Participants</a
+            <ul class="list-group list-group-flush">
+               <li class="list-group-item">Venue: {{e_v.event.venue}}</li>
+               <li class="list-group-item">Start Time: {{e_v.event.start_datetime}}</li>
+               <li class="list-group-item">End Time: {{e_v.event.end_datetime}}</li>
+               <li class="list-group-item">Registration Fee: &#2547; {{e_v.event.registration_fee|floatformat:2}}</li>
+               <li class="list-group-item">Registration Deadline: {{e_v.event.registration_deadline}}</li>
+            </ul>
+            <div class="card-body w-100">
+               <a href="{% url 'App_Dashboard:active_event_details' pk=e_v.event.pk %}" class="btn btn-outline-info px-5 w-100"
+                  >View Details</a
                >
             </div>
          </div>
-         <div class="col-sm">
-            <div id="chart6" class="pt-2">
-               <a href="{% url 'App_Dashboard:active_event_details' pk=event.id %}" class="btn btn-md btn-outline-info"
-                  >Event Details</a
-               >
-            </div>
-         </div>
       </div>
+      {% endfor %}
    </div>
+   <!--end row-->
 </div>
 {% endblock body_block %}

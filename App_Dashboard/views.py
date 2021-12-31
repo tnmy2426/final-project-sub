@@ -203,6 +203,5 @@ def MiscToken(request, pk):
 def VolunteerDashboard(request):
     user = request.user
     volunteer = Volunteer.objects.get(user=user)
-    event_volunteer = EventVolunteer.objects.get(volunteer=volunteer)
-    event = get_object_or_404(Event, id=event_volunteer.event.id)
-    return render (request, "App_Dashboard/volunteer_dashboard.html", {"event":event})
+    event_volunteers = EventVolunteer.objects.filter(volunteer=volunteer)
+    return render (request, "App_Dashboard/volunteer_dashboard.html", {"event_volunteers":event_volunteers})
